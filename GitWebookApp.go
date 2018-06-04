@@ -27,7 +27,7 @@ func handleWebHook(w http.ResponseWriter, r *http.Request) {
 	switch e := event.(type) {
 	case *github.PushEvent:
 		 executeDeployScript(e.Repo.GetName(), e.Repo.GetCloneURL(), e.GetAfter())
-		log.Println(e)
+		 log.Println(e)
 	default:
 		log.Printf("unknown event type %s\n", github.WebHookType(r))
 		return
@@ -36,11 +36,13 @@ func handleWebHook(w http.ResponseWriter, r *http.Request) {
 }
 
 func executeDeployScript(repo string, repo_url string,commit string) {
+	log.Printf("calling deploy script %s, repo_url %s, commit %s", repo,repo_url,commit)
 	cmdStr := "/home/ec2-user/deploy.sh "
 	cmd := exec.Command("/bin/sh", "-c", cmdStr, repo, repo_url,commit)
 	_, err := cmd.Output()
 	if err != nil {
-		println(err.Error())
+		log.Println("Error executing the deploy script:")
+		log.Println(err.Error())
 		return
 	}
 }

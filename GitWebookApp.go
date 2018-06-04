@@ -26,7 +26,7 @@ func handleWebHook(w http.ResponseWriter, r *http.Request) {
 
 	switch e := event.(type) {
 	case *github.PushEvent:
-		 executeDeployScript(e.Repo.GetName(), e.Repo.GetCloneURL(), e.GetAfter())
+		 go executeDeployScript(e.Repo.GetName(), e.Repo.GetCloneURL(), e.GetAfter())
 		 log.Println(e)
 	default:
 		log.Printf("unknown event type %s\n", github.WebHookType(r))

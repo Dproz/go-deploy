@@ -44,6 +44,10 @@ mvn clean install
 # Create the docker container
 mvn dockerfile:push
 
+
+# Bring down the app
+docker-compose -f  ./src/main/docker/app.yml down --rmi all
+
 # Now run the app
 docker-compose -f ./src/main/docker/app.yml up -d 
 

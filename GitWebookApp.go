@@ -37,7 +37,7 @@ func handleWebHook(w http.ResponseWriter, r *http.Request) {
 
 func executeDeployScript(repo string, repo_url string,commit string) {
 	log.Printf("calling deploy script %s, repo_url %s, commit %s", repo,repo_url,commit)
-	cmdStr := "/home/ec2-user/deploy.sh " + repo + " " +repo_url + " " + commit
+	cmdStr := "/opt/app/deploy.sh " + repo + " " +repo_url + " " + commit
 	log.Printf("Exceuting command %s",cmdStr)
 	cmd := exec.Command("/bin/sh", "-c", cmdStr)
 	_, err := cmd.Output()
